@@ -9,8 +9,6 @@ const About = lazy(() => import('./views/About'));
 const Login = lazy(() => import('./views/Login'));
 const Register = lazy(() => import('./views/Register'));
 
-
-
 function App() {
     return (
         <div className="App">
