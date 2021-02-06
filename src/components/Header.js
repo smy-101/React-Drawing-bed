@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import logo from '../logo.svg';
 import {NavLink, useHistory} from 'react-router-dom';
 import styled from 'styled-components';
@@ -35,6 +35,9 @@ const Login = styled.div`
     margin-left: 10px;
   }
 `;
+const StyledButton = styled(Button)`
+  margin-left: 10px;
+`;
 
 const Header = observer(() => {
     const history = useHistory();
@@ -52,7 +55,11 @@ const Header = observer(() => {
     const handleRegister = () => {
         console.log('跳转到注册页面')
         history.push('/register');
-    }
+    };
+
+    useEffect(() => {
+        UserStore.pullUser();
+    }, [])
 
     return (
         <Wrapper>
@@ -63,8 +70,16 @@ const Header = observer(() => {
                 <NavLink to="/about" activeClassName="active">关于我</NavLink>
             </nav>
             <Login>
-                <Button type="primary">登录</Button>
-                <Button type="primary">注销</Button>
+                {
+                    UserStore.currentUser ? <>
+                        {UserStore.currentUser.attributes.username} <StyledButton type="primary"
+                                                                                  onClick={handleLogout}>注销</StyledButton>
+                    </> : <>
+                        <StyledButton type="primary" onClick={handleLogin}>登录</StyledButton>
+                        <StyledButton type="primary" onClick={handleRegister}>注册</StyledButton>
+                    </>
+
+                }
             </Login>
         </Wrapper>
     )
