@@ -2,6 +2,7 @@ import React from 'react';
 import {Form, Input, Button} from 'antd';
 import styled from 'styled-components';
 import { useStores } from '../stores';
+import { useHistory } from 'react-router-dom';
 
 const layout = {
     labelCol: {span: 6},
@@ -23,18 +24,24 @@ const Wrapper = styled.div`
 `
 const Login = () => {
     const { AuthStore } = useStores();
-    const onFinish = (values) => {
+    const history = useHistory();
+
+
+    const onFinish = values => {
         console.log('Success:', values);
         AuthStore.setUsername(values.username);
         AuthStore.setPassword(values.password);
         AuthStore.login()
             .then(() => {
                 console.log('登录成功,跳转到首页')
+                history.push('/');
             }).catch((e)=>{
             console.log(e)
             console.log('登录失败')
         })
     };
+
+
     const onFinishFailed = (errorInfo) => {
         console.log('Failed:', errorInfo);
     };
