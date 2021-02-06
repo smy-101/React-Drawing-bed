@@ -1,8 +1,8 @@
 import React from 'react';
 import {Form, Input, Button} from 'antd';
 import styled from 'styled-components';
-import { useStores } from '../stores';
-import { useHistory } from 'react-router-dom';
+import {useStores} from '../stores';
+import {useHistory} from 'react-router-dom';
 
 const layout = {
     labelCol: {span: 6},
@@ -11,19 +11,20 @@ const layout = {
 const tailLayout = {
     wrapperCol: {offset: 6, span: 18},
 };
-const Wrapper = styled.div` 
+const Wrapper = styled.div`
   max-width: 600px;
   margin: 30px auto;
-  box-shadow: 2px 2px 4px 0 rgba(0,0,0,0.2);
+  box-shadow: 2px 2px 4px 0 rgba(0, 0, 0, 0.2);
   border-radius: 4px;
   padding: 20px;
-  >h1{
+
+  > h1 {
     text-align: center;
     margin-bottom: 30px;
   }
 `
 const Login = () => {
-    const { AuthStore } = useStores();
+    const {AuthStore} = useStores();
     const history = useHistory();
     console.log(AuthStore);
 
@@ -35,7 +36,7 @@ const Login = () => {
             .then(() => {
                 console.log('登录成功,跳转到首页')
                 history.push('/');
-            }).catch((e)=>{
+            }).catch((e) => {
             console.log(e)
             console.log('登录失败')
         })
@@ -47,8 +48,8 @@ const Login = () => {
     };
 
     const validateUsername = (rule, value) => {
-        if(/\W/.test(value)) return Promise.reject('只能是字母数字下划线');
-        if(value.length < 4 || value.length > 10) return Promise.reject('长度为4～10个字符');
+        if (/\W/.test(value)) return Promise.reject('只能是字母数字下划线');
+        if (value.length < 4 || value.length > 10) return Promise.reject('长度为4～10个字符');
         return Promise.resolve();
     };
 
@@ -74,7 +75,7 @@ const Login = () => {
                         }
                     ]}
                 >
-                    <Input />
+                    <Input/>
                 </Form.Item>
 
                 <Form.Item
@@ -95,7 +96,7 @@ const Login = () => {
                         }
                     ]}
                 >
-                    <Input.Password />
+                    <Input.Password/>
                 </Form.Item>
 
 
@@ -108,8 +109,6 @@ const Login = () => {
         </Wrapper>
     );
 };
-
-
 
 
 export default Login;
