@@ -52,6 +52,21 @@ class AuthStore {
     }
 
 
+    static setUsername(username) {
+
+    }
+
+    static setPassword(password) {
+
+    }
+
+    static login() {
+
+    }
+
+    static logout() {
+
+    }
 }
 
 
