@@ -1,12 +1,8 @@
-import {observable, action, makeObservable} from 'mobx';
-import {Auth} from '../models';
+import { observable, action } from 'mobx';
+import { Auth } from '../models';
 import UserStore from './user';
 
 class AuthStore {
-    constructor() {
-        makeObservable(this)
-    }
-
     @observable values = {
         username: '',
         password: ''
@@ -51,23 +47,7 @@ class AuthStore {
         UserStore.resetUser();
     }
 
-
-    static setUsername(username) {
-
-    }
-
-    static setPassword(password) {
-
-    }
-
-    static login() {
-
-    }
-
-    static logout() {
-
-    }
 }
 
 
-export default AuthStore;
+export default new AuthStore();
