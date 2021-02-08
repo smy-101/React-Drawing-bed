@@ -7618,7 +7618,7 @@ leancloud-realtime@^5.0.0-rc.4:
     protobufjs "^5.0.1"
     uuid "^3.0.0"
 
-leancloud-storage@^4.10.0:
+leancloud-storage@^4.5.3:
   version "4.10.0"
   resolved "https://registry.yarnpkg.com/leancloud-storage/-/leancloud-storage-4.10.0.tgz#7570509193b82fbaf1338e3c7b817dbda8ac5c73"
   integrity sha512-/0wt4gUxan1nnpjstnvfC8jNWq75dlv7MPEZYUlrvP0VDAzsab8mYfL/SwZZT0Rl3deJCZ38tftRmfBmFyEk4g==
