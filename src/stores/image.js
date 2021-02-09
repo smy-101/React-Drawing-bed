@@ -22,6 +22,7 @@ class ImageStore {
         return new Promise((resolve, reject) => {
             Uploader.add(this.file, this.filename)
                 .then(serverFile => {
+                    message.success('上传成功');
                     this.serverFile = serverFile;
                     resolve(serverFile);
                 }).catch(err => {

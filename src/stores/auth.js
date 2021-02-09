@@ -21,6 +21,7 @@ class AuthStore {
         return new Promise((resolve, reject) => {
             Auth.login(this.values.username, this.values.password)
                 .then(user => {
+                    message.success('登录成功');
                     UserStore.pullUser();
                     resolve(user);
                 }).catch(err => {
@@ -35,6 +36,7 @@ class AuthStore {
         return new Promise((resolve, reject) => {
             Auth.register(this.values.username, this.values.password)
                 .then(user => {
+                    message.success('注册成功');
                     UserStore.pullUser();
                     resolve(user);
                 }).catch(err => {
