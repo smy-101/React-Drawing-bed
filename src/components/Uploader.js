@@ -1,7 +1,7 @@
 import React, {useRef} from 'react';
 import {useStores} from "../stores";
 import {observer, useLocalStore} from "mobx-react";
-import {Upload, message} from 'antd';
+import {Upload, message, Spin} from 'antd';
 import {InboxOutlined} from '@ant-design/icons';
 import styled from 'styled-components';
 
@@ -32,6 +32,14 @@ const Uploader = observer(() => {
             ImageStore.setFilename(file.name);
             if (UserStore.currentUser === null) {
                 message.warning('请先登录再上传！');
+                return false;
+            }
+            if (!/(svg$)|(png$)|(jpg$)|(jpeg$)|(gif$)/ig.test(file.type)) {
+                message.error('只能上传png/svg/jpg/gif格式的图片');
+                return false;
+            }
+            if (file.size > 1024 * 1024) {
+                message.error('图片最大1M');
                 return false;
             }
             ImageStore.upload()
@@ -78,16 +86,15 @@ const Uploader = observer(() => {
 
     return (
         <div>
-            <Dragger {...props}>
-                <p className="ant-upload-drag-icon">
-                    <InboxOutlined/>
-                </p>
-                <p className="ant-upload-text">Click or drag file to this area to upload</p>
-                <p className="ant-upload-hint">
-                    Support for a single or bulk upload. Strictly prohibit from uploading company data or other
-                    band files
-                </p>
-            </Dragger>
+            <Spin tip="上传中" spinning={ImageStore.isUpoading}>
+                <Dragger {...props}>
+                    <p className="ant-upload-drag-icon">
+                        <InboxOutlined/>
+                    </p>
+                    <p className="ant-upload-text">点击或者拖拽上传图片</p>
+                    <p className="ant-upload-hint">仅支持一般常见类型的图片，图片最大1M</p>
+                </Dragger>
+            </Spin>
             {
                 ImageStore.serverFile ? <Wrapper>
                     <h1>上传结果</h1>
@@ -108,7 +115,7 @@ const Uploader = observer(() => {
                             <input ref={ref2} onChange={bindHeightChange} placeholder="最大高度（可选）"/>
                         </dd>
                         <dd>
-                            <a  target="_blank" href={store.fullStr}>{store.fullStr}</a>
+                            <a target="_blank" href={store.fullStr}>{store.fullStr}</a>
                         </dd>
                     </dl>
                 </Wrapper> : null
