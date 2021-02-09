@@ -1,6 +1,8 @@
-import { observable, action } from 'mobx';
-import { Auth } from '../models';
+import {observable, action} from 'mobx';
+import {Auth} from '../models';
 import UserStore from './user';
+import HistoryStore from './history';
+import ImageStore from './image';
 import {message} from "antd";
 
 class AuthStore {
@@ -49,6 +51,8 @@ class AuthStore {
 
     @action logout() {
         Auth.logout();
+        HistoryStore.reset();
+        ImageStore.reset();
         UserStore.resetUser();
     }
 
