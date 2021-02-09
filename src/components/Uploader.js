@@ -1,24 +1,51 @@
 import React, {useRef} from 'react';
 import {useStores} from "../stores";
 import {observer, useLocalStore} from "mobx-react";
-import {Upload, message, Spin} from 'antd';
+import {Upload, message, Spin, Popover, Button} from 'antd';
 import {InboxOutlined} from '@ant-design/icons';
 import styled from 'styled-components';
+import copy from 'copy-to-clipboard';
 
 const Wrapper = styled.div`
   margin-top: 30px;
   border: 1px dashed #ccc;
   padding: 20px;
 
+  > p {
+    margin: 0 0 4px 0;
+
+  }
+
   > h1 {
     margin: 20px 0;
     text-align: center;
   }
 
-  > dl > dd > img {
+  > div > input {
+    margin-right: 4px;
+  }
+
+  > img {
     max-width: 300px;
+    margin-bottom: 4px;
+  }
+
+  > .name {
+    margin-bottom: 4px;
+  }
+
+  > .button {
+    margin-top: 4px;
+    display: flex;
+    justify-content: center;
   }
 `
+const ContentWrapper = styled.div`
+  > button {
+    margin-right: 4px;
+  }
+`
+
 
 const {Dragger} = Upload;
 const Uploader = observer(() => {
@@ -83,6 +110,22 @@ const Uploader = observer(() => {
             return ImageStore.serverFile.attributes.url.attributes.url + '?imageView2/0' + store.widthStr + store.heightStr
         }
     }));
+    const handleOpen = () => {
+        window.open(store.fullStr);
+        // window.location.href="https://www.baidu.com/";
+    }
+    const handleCopy = () => {
+        copy(store.fullStr);
+    }
+
+
+    const content = (
+        <ContentWrapper>
+            <Button type="primary" size="small" onClick={handleCopy}>复制链接</Button>
+            <Button type="primary" size="small" onClick={handleOpen}>打开链接</Button>
+        </ContentWrapper>
+    );
+
 
     return (
         <div>
@@ -98,26 +141,20 @@ const Uploader = observer(() => {
             {
                 ImageStore.serverFile ? <Wrapper>
                     <h1>上传结果</h1>
-                    <dl>
-                        <dt>地址</dt>
-                        <dd><a target="_blank"
-                               href={ImageStore.serverFile.attributes.url.attributes.url}>{ImageStore.serverFile.attributes.url.attributes.url}</a>
-                        </dd>
-                        <dt>文件名</dt>
-                        <dd>{ImageStore.filename}</dd>
-                        <dt>图片预览</dt>
-                        <dd>
-                            <img src={ImageStore.serverFile.attributes.url.attributes.url} alt="图片地址"/>
-                        </dd>
-                        <dt>图片尺寸修改</dt>
-                        <dd>
-                            <input ref={ref1} onChange={bindWidthChange} placeholder="最大宽度（可选）"/>
-                            <input ref={ref2} onChange={bindHeightChange} placeholder="最大高度（可选）"/>
-                        </dd>
-                        <dd>
-                            <a target="_blank" href={store.fullStr}>{store.fullStr}</a>
-                        </dd>
-                    </dl>
+                    <p>图片预览</p>
+                    <img src={ImageStore.serverFile.attributes.url.attributes.url} alt="图片地址"/>
+                    <p>文件名</p>
+                    <div className="name">{ImageStore.filename}</div>
+                    <p>图片尺寸修改(不等比例修改可能导致图片失真)</p>
+                    <div>
+                        <input ref={ref1} onChange={bindWidthChange} placeholder="最大宽度(可选)"/>
+                        <input ref={ref2} onChange={bindHeightChange} placeholder="最大高度(可选)"/>
+                    </div>
+                    <div className="button">
+                        <Popover content={content} title="请选择操作" trigger="click">
+                            <Button type="primary">生成链接</Button>
+                        </Popover>
+                    </div>
                 </Wrapper> : null
             }
         </div>
