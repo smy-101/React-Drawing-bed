@@ -19,6 +19,7 @@ class HistoryStore {
             .then(newList => {
                 this.append(newList);
                 this.page++;
+                console.log(this.list);
                 if (newList.length < this.limit) {
                     this.hasMore = false;
                 }
@@ -36,6 +37,21 @@ class HistoryStore {
         this.hasMore = true;
         this.page = 0;
     }
+
+    @action delete(){
+        console.log(this.list);
+        this.isUpoading = true;
+        return new Promise((resolve, reject)=>{
+            Uploader.delete(this.serverFile.id)
+                .then(()=>{console.log('success');}).catch(err => {
+                message.error('删除失败');
+                reject(err);
+            }).finally(() => {
+                this.isUpoading = false;
+            });
+        })
+    }
+
 
 }
 

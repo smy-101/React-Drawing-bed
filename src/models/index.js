@@ -54,6 +54,14 @@ const Uploader = {
         return new Promise((resolve, reject) => {
             query.find().then(results => resolve(results)).catch(error => reject(error))
         })
+    },
+    delete(objectId){
+        const item = AV.Object.createWithoutData('Image', objectId);
+        console.log(item);
+        return new Promise((resolve, reject) => {
+            item.destroy().then(() => {
+                console.log('success');}).catch(error => reject(error))
+        })
     }
 }
 

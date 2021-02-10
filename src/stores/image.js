@@ -39,6 +39,10 @@ class ImageStore {
         this.isUpoading = false;
         this.serverFile = null;
     }
+    @action delete(){
+        console.log(this.serverFile);
+    }
+
 
 
 }

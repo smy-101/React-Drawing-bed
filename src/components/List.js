@@ -4,6 +4,8 @@ import {useStores} from "../stores";
 import InfiniteScroll from 'react-infinite-scroller';
 import { List, Spin} from 'antd';
 import styled from 'styled-components';
+import {Uploader} from '../models'
+
 
 const Wrapper=styled.div`
   >img{
@@ -20,13 +22,13 @@ const Lists = observer(() => {
     const loadMore = () => {
         HistoryStore.find();
     };
+
     useEffect(() => {
         return () => {
             console.log('重新加载')
             HistoryStore.reset();
         }
     }, []);
-
     return (
         <div>
             <InfiniteScroll
@@ -48,6 +50,9 @@ const Lists = observer(() => {
                             </div>
                             <div>
                                 <a  target="_blank" href={item.attributes.url.attributes.url}>{item.attributes.url.attributes.url}</a>
+                            </div>
+                            <div>
+                                <button onClick={()=>{Uploader.delete(item.id).then(window.location.reload(true))}}>删除</button>
                             </div>
                         </List.Item>
                     }

@@ -72,7 +72,7 @@ const Uploader = observer(() => {
             ImageStore.upload()
                 .then((serverFile) => {
                     console.log('上传成功')
-                    console.log(serverFile);
+                    console.log(serverFile.id);
                     console.log(serverFile.attributes.url.attributes.url);
                 }).catch(() => {
                 console.log('上传失败')
