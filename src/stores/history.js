@@ -19,7 +19,6 @@ class HistoryStore {
             .then(newList => {
                 this.append(newList);
                 this.page++;
-                console.log(this.list);
                 if (newList.length < this.limit) {
                     this.hasMore = false;
                 }

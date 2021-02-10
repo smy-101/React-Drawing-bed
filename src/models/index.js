@@ -1,4 +1,5 @@
 import AV, {User} from 'leancloud-storage';
+import {message} from "antd";
 
 AV.init({
     appId: "knIqwCycMwbrF864OqLPEqK6-gzGzoHsz",
@@ -57,9 +58,9 @@ const Uploader = {
     },
     delete(objectId){
         const item = AV.Object.createWithoutData('Image', objectId);
-        console.log(item);
         return new Promise((resolve, reject) => {
             item.destroy().then(() => {
+                message.success('删除成功')
                 console.log('success');}).catch(error => reject(error))
         })
     }

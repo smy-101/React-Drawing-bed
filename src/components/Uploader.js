@@ -116,6 +116,7 @@ const Uploader = observer(() => {
     }
     const handleCopy = () => {
         copy(store.fullStr);
+        message.success('复制成功')
     }
 
 

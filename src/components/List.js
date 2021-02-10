@@ -1,14 +1,20 @@
-import React, { useEffect } from "react";
+import React, {useEffect} from "react";
 import {observer} from "mobx-react";
 import {useStores} from "../stores";
 import InfiniteScroll from 'react-infinite-scroller';
-import { List, Spin} from 'antd';
+import {Button, List, Spin,message} from 'antd';
 import styled from 'styled-components';
 import {Uploader} from '../models'
+import copy from "copy-to-clipboard";
 
+const ButtonWrapper = styled.div`
+  > button {
+    margin-right: 4px;
+  }
+`
 
-const Wrapper=styled.div`
-  >img{
+const Wrapper = styled.div`
+  > img {
     width: 100px;
     height: 120px;
     object-fit: contain;
@@ -29,13 +35,15 @@ const Lists = observer(() => {
             HistoryStore.reset();
         }
     }, []);
+
+
     return (
         <div>
             <InfiniteScroll
                 initialLoad={true}
                 pageStart={0}
                 loadMore={loadMore}
-                hasMore={!HistoryStore.isLoading&&HistoryStore.hasMore}
+                hasMore={!HistoryStore.isLoading && HistoryStore.hasMore}
                 useWindow={true}
             >
                 <List
@@ -43,21 +51,29 @@ const Lists = observer(() => {
                     renderItem={
                         item => <List.Item key={item.id}>
                             <Wrapper>
-                                <img src={item.attributes.url.attributes.url}   alt="图片地址"/>
+                                <img src={item.attributes.url.attributes.url} alt="图片地址"/>
                             </Wrapper>
                             <div>
                                 <h5>{item.attributes.filename}</h5>
                             </div>
-                            <div>
-                                <a  target="_blank" href={item.attributes.url.attributes.url}>{item.attributes.url.attributes.url}</a>
-                            </div>
-                            <div>
-                                <button onClick={()=>{Uploader.delete(item.id).then(window.location.reload(true))}}>删除</button>
-                            </div>
+                            <ButtonWrapper>
+                                <Button size="small" type="primary" onClick={() => {
+                                    copy(item.attributes.url.attributes.url);message.success('复制成功');
+                                }}>复制链接</Button>
+                                <Button size="small" type="primary" onClick={() => {
+                                    window.open(item.attributes.url.attributes.url)
+                                }}>打开链接</Button>
+                                <Button size="small" type="primary" onClick={() => {
+                                    Uploader.delete(item.id);
+                                    setTimeout(()=>{
+                                        window.location.reload(true)
+                                    },1000)
+                                }}>删除图片</Button>
+                            </ButtonWrapper>
                         </List.Item>
                     }
                 >
-                    { HistoryStore.isLoading && HistoryStore.hasMore && (
+                    {HistoryStore.isLoading && HistoryStore.hasMore && (
                         <div>
                             <Spin tip="加载中"/>
                         </div>
