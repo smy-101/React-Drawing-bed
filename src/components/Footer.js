@@ -12,7 +12,7 @@ const Wrapper = styled.footer`
 function Footer() {
     return (
         <Wrapper>
-            <div>Footer</div>
+            <div>简易图床</div>
         </Wrapper>
     )
 }

@@ -9,8 +9,10 @@ const Homepage = observer(() => {
     // const {UserStore} = useStores();
     return (
         <>
-            <Tips>请先登录再上传</Tips>
-            <Uploader/>
+            <div>
+                <Tips>请先登录再上传</Tips>
+                <Uploader/>
+            </div>
         </>
     );
 })

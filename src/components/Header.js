@@ -67,7 +67,7 @@ const Header = observer(() => {
             <nav>
                 <NavLink to="/" exact activeClassName="active">首页</NavLink>
                 <NavLink to="/history" activeClassName="active">历史记录</NavLink>
-                <NavLink to="/about" activeClassName="active">关于我</NavLink>
+                <NavLink to="/about" activeClassName="active">关于</NavLink>
             </nav>
             <Login>
                 {
